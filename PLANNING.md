@@ -1,7 +1,7 @@
-# Product Inventory System - Planejamento do Projeto
+# Wishlist App - Planejamento do Projeto
 
 ## Contexto
-Projeto de aprendizado do zero. Danilo está aprendendo React, Node.js/Express e PostgreSQL construindo um sistema de gerenciamento de estoque de produtos.
+Projeto de aprendizado do zero. Danilo está aprendendo React, Node.js/Express e PostgreSQL construindo uma lista de desejos (wishlist) onde usuários podem salvar produtos que querem comprar, com links de onde comprar e marcar como comprado quando adquirirem.
 
 **Importante para o Claude:** Não entregue código pronto. Guie o Danilo, explique o porquê de cada decisão, e deixe ele escrever o código. Corrija quando errar. Ele aprende melhor assim.
 
@@ -32,6 +32,68 @@ config      -> conexão com o banco
 
 ---
 
+## Funcionalidades
+- Cadastro e login de usuários
+- Cada usuário cria e gerencia suas próprias categorias
+- Cada usuário adiciona produtos à sua wishlist com nome, descrição e links de compra
+- Um produto pode ter vários links (de lojas diferentes)
+- O usuário pode marcar um produto como comprado
+- Imagem do produto (será implementada no final)
+
+---
+
+## Banco de Dados
+
+### Novo schema (banco: `inventory`)
+
+```sql
+-- Usuários do sistema
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Categorias criadas por cada usuário (ex: Eletrônicos, Roupas)
+CREATE TABLE categorias (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- Produtos que o usuário quer comprar
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    categoria_id INT,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    comprado BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+-- Links de onde comprar o produto (um produto pode ter vários)
+CREATE TABLE links (
+    id SERIAL PRIMARY KEY,
+    produto_id INT NOT NULL,
+    url TEXT NOT NULL,
+    nome_loja VARCHAR(255),
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+);
+```
+
+### Atenção
+As tabelas antigas (`fornecedores`, `movimentacoes`) foram removidas do escopo.
+O schema.sql no repositório precisa ser atualizado com o novo schema acima.
+As tabelas antigas precisam ser deletadas no pgAdmin e as novas criadas.
+
+---
+
 ## Estrutura de Pastas
 
 ```
@@ -40,58 +102,28 @@ Products/
 ├── back-end/
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── db.js           (conexão com o PostgreSQL - FEITO)
+│   │   │   └── db.js                    (FEITO)
 │   │   ├── controllers/
-│   │   │   └── categoriaController.js   (a fazer)
+│   │   │   ├── categoriaController.js   (FEITO - só getAll por enquanto)
+│   │   │   ├── usuarioController.js     (a fazer)
+│   │   │   ├── produtoController.js     (a fazer)
+│   │   │   └── linkController.js        (a fazer)
 │   │   ├── routes/
-│   │   │   └── categoriaRoutes.js       (a fazer)
+│   │   │   ├── categoriaRoutes.js       (FEITO - só GET por enquanto)
+│   │   │   ├── usuarioRoutes.js         (a fazer)
+│   │   │   ├── produtoRoutes.js         (a fazer)
+│   │   │   └── linkRoutes.js            (a fazer)
 │   │   └── services/
-│   │       └── categoriaService.js      (FEITO - getAll())
-│   ├── index.js                (servidor Express - FEITO)
-│   ├── .env                    (variáveis de ambiente - FEITO)
+│   │       ├── categoriaService.js      (FEITO - só getAll())
+│   │       ├── usuarioService.js        (a fazer)
+│   │       ├── produtoService.js        (a fazer)
+│   │       └── linkService.js           (a fazer)
+│   ├── index.js                         (FEITO)
+│   ├── .env                             (FEITO)
 │   └── package.json
 ├── database/
-│   └── schema.sql              (FEITO)
+│   └── schema.sql                       (precisa atualizar com novo schema)
 └── .gitignore
-```
-
----
-
-## Banco de Dados
-
-### Tabelas criadas no PostgreSQL (banco: `inventory`)
-
-```sql
-CREATE TABLE categorias(
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE fornecedores(
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    contato VARCHAR(255)
-);
-
-CREATE TABLE produtos(
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    preco DECIMAL(10,2),
-    quantidade INT,
-    categoria_id INT,
-    FOREIGN KEY (categoria_id) REFERENCES categorias(id),
-    fornecedor_id INT,
-    FOREIGN KEY (fornecedor_id) REFERENCES fornecedores(id)
-);
-
-CREATE TABLE movimentacoes(
-    id SERIAL PRIMARY KEY,
-    produto_id INT,
-    FOREIGN KEY (produto_id) REFERENCES produtos(id),
-    tipo VARCHAR(10) CHECK(tipo IN ('entrada', 'saida')),
-    quantidade INT,
-    data TIMESTAMP
-);
 ```
 
 ---
@@ -105,6 +137,11 @@ DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=sua_senha
 DB_NAME=inventory
+```
+
+Futuramente adicionar:
+```
+JWT_SECRET=uma_chave_secreta_qualquer
 ```
 
 ---
@@ -125,6 +162,10 @@ DB_NAME=inventory
 }
 ```
 
+Futuramente instalar:
+- `bcrypt` -> para criptografar senhas
+- `jsonwebtoken` -> para autenticação com JWT
+
 Scripts:
 - `npm run dev` -> inicia o servidor com nodemon (desenvolvimento)
 - `npm start` -> inicia o servidor com node (produção)
@@ -136,61 +177,57 @@ Scripts:
 - [x] Estrutura de pastas do projeto
 - [x] `.gitignore` na raiz
 - [x] Banco de dados `inventory` criado no PostgreSQL
-- [x] 4 tabelas criadas: `categorias`, `fornecedores`, `produtos`, `movimentacoes`
-- [x] `schema.sql` com todas as tabelas versionado no repositório
-- [x] Backend inicializado com `npm init`
-- [x] Dependências instaladas (express, pg, dotenv, cors, nodemon)
-- [x] `index.js` com servidor Express funcionando na porta 3000
 - [x] `src/config/db.js` com conexão ao PostgreSQL via Pool
+- [x] `index.js` com servidor Express funcionando na porta 3000
 - [x] `src/services/categoriaService.js` com função `getAll()`
+- [x] `src/controllers/categoriaController.js` com `getAllCategorias()`
+- [x] `src/routes/categoriaRoutes.js` com rota GET /categorias
+- [x] Rota GET /categorias testada e funcionando
 - [x] Repositório GitHub: https://github.com/DaniloSRocha26/Product-inventory-system
 
 ---
 
 ## Próximos passos (continuar a partir daqui)
 
-### 1. Finalizar o CRUD de Categorias (Backend)
+### 1. Atualizar o banco de dados
+- Deletar as tabelas antigas no pgAdmin (na ordem: movimentacoes, produtos, fornecedores, categorias)
+- Criar as novas tabelas na ordem: usuarios, categorias, produtos, links
+- Atualizar o `database/schema.sql` com o novo schema
 
-Seguir sempre o fluxo: **service -> controller -> routes -> registrar no index.js**
+### 2. Autenticação de usuários
+- Instalar `bcrypt` e `jsonwebtoken`
+- Adicionar `JWT_SECRET` no `.env`
+- Criar `usuarioService.js` com funções: `register(nome, email, senha)` e `login(email, senha)`
+- Criar `usuarioController.js` com funções: `register` e `login`
+- Criar `usuarioRoutes.js` com rotas: `POST /usuarios/register` e `POST /usuarios/login`
+- O login deve retornar um token JWT que será usado nas próximas requisições
 
-#### `src/controllers/categoriaController.js`
-- Importar as funções do `categoriaService.js`
-- Criar função `getAllCategorias(req, res)` que chama `getAll()` e retorna `res.json()`
-- Exportar a função
+### 3. Middleware de autenticação
+- Criar `src/middlewares/auth.js` que valida o token JWT em rotas protegidas
+- Rotas de categorias, produtos e links serão protegidas por esse middleware
 
-#### `src/routes/categoriaRoutes.js`
-- Importar o `express` e criar um `Router`
-- Importar as funções do controller
-- Definir as rotas:
-  - `GET /` -> getAllCategorias
-  - `POST /` -> createCategoria
-  - `PUT /:id` -> updateCategoria
-  - `DELETE /:id` -> deleteCategoria
-- Exportar o router
+### 4. CRUD de Categorias (adaptar o que já existe)
+- Atualizar `categoriaService.js`: o `getAll` precisa filtrar por `usuario_id`
+- Completar com: `create(usuario_id, nome)`, `update(id, nome)`, `remove(id)`
+- Atualizar controller e routes com as novas funções
 
-#### Registrar as rotas no `index.js`
-- Importar o `categoriaRoutes.js`
-- Usar `app.use('/categorias', categoriaRoutes)`
+### 5. CRUD de Produtos
+- Criar service, controller e routes para produtos
+- Funções: `getAll(usuario_id)`, `create()`, `update()`, `remove()`, `toggleComprado(id)`
 
-#### Completar o `categoriaService.js` com todas as funções
-- `getAll()` -> FEITA
-- `create(nome)` -> INSERT INTO categorias
-- `update(id, nome)` -> UPDATE categorias
-- `remove(id)` -> DELETE FROM categorias
+### 6. CRUD de Links
+- Criar service, controller e routes para links
+- Funções: `getByProduto(produto_id)`, `create(produto_id, url, nome_loja)`, `remove(id)`
 
-### 2. CRUD de Fornecedores (mesmo padrão de Categorias)
-
-### 3. CRUD de Produtos (mais complexo, tem relacionamentos)
-
-### 4. CRUD de Movimentações (entrada/saída de estoque)
-
-### 5. Frontend com React
+### 7. Frontend com React
 - Criar com `npm create vite@latest front-end -- --template react`
 - Instalar axios para fazer as requisições HTTP à API
-- Criar as telas: Produtos, Categorias, Fornecedores, Movimentações
+- Telas: Login, Cadastro, Wishlist (lista de produtos), Categorias
 
-### 6. Tailwind CSS
+### 8. Tailwind CSS
 - Adicionar ao frontend após as telas estarem funcionando
+
+### 9. Upload de imagem dos produtos (deixar para o final)
 
 ---
 
@@ -199,4 +236,4 @@ Seguir sempre o fluxo: **service -> controller -> routes -> registrar no index.j
 - Commit e push após cada arquivo/feature concluída
 - Comentários nos arquivos em português, na primeira pessoa, simples e detalhados (sem travessões)
 - Claude não entrega código pronto, apenas guia
-- Padrão de commit: `feat: descrição` para novas features
+- Padrão de commit: `feat:` para features, `docs:` para comentários, `chore:` para configs
