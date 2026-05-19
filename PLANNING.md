@@ -47,50 +47,43 @@ config      -> conexão com o banco
 ### Novo schema (banco: `inventory`)
 
 ```sql
--- Usuários do sistema
-CREATE TABLE usuarios (
-    id SERIAL PRIMARY KEY,
+CREATE EXTENSION IF NOT EXISTS citext;
+
+CREATE TABLE usuarios(
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    email CITEXT NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Categorias criadas por cada usuário (ex: Eletrônicos, Roupas)
-CREATE TABLE categorias (
-    id SERIAL PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    nome VARCHAR(255) NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+CREATE TABLE categorias(
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    usuario_id UUID NOT NULL REFERENCES usuarios(id),
+    nome VARCHAR(255) NOT NULL
 );
 
--- Produtos que o usuário quer comprar
 CREATE TABLE produtos (
-    id SERIAL PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    categoria_id INT,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    usuario_id UUID NOT NULL REFERENCES usuarios(id),
+    categoria_id UUID REFERENCES categorias(id),
     nome VARCHAR(255) NOT NULL,
     descricao TEXT,
-    comprado BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+    comprado BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Links de onde comprar o produto (um produto pode ter vários)
-CREATE TABLE links (
-    id SERIAL PRIMARY KEY,
-    produto_id INT NOT NULL,
+CREATE TABLE links(
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    produto_id UUID NOT NULL REFERENCES produtos(id),
     url TEXT NOT NULL,
-    nome_loja VARCHAR(255),
-    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+    nome_loja VARCHAR(255)
 );
 ```
 
 ### Atenção
 As tabelas antigas (`fornecedores`, `movimentacoes`) foram removidas do escopo.
-O schema.sql no repositório precisa ser atualizado com o novo schema acima.
-As tabelas antigas precisam ser deletadas no pgAdmin e as novas criadas.
+O schema foi atualizado para o novo modelo e as tabelas foram recriadas no pgAdmin.
 
 ---
 
@@ -122,7 +115,7 @@ Products/
 │   ├── .env                             (FEITO)
 │   └── package.json
 ├── database/
-│   └── schema.sql                       (precisa atualizar com novo schema)
+│   └── schema.sql                       (FEITO)
 └── .gitignore
 ```
 
@@ -184,15 +177,17 @@ Scripts:
 - [x] `src/routes/categoriaRoutes.js` com rota GET /categorias
 - [x] Rota GET /categorias testada e funcionando
 - [x] Repositório GitHub: https://github.com/DaniloSRocha26/Product-inventory-system
+- [x] Banco de dados atualizado com novo schema (usuarios, categorias, produtos, links)
+- [x] `database/schema.sql` atualizado com o novo schema
 
 ---
 
 ## Próximos passos (continuar a partir daqui)
 
-### 1. Atualizar o banco de dados
-- Deletar as tabelas antigas no pgAdmin (na ordem: movimentacoes, produtos, fornecedores, categorias)
-- Criar as novas tabelas na ordem: usuarios, categorias, produtos, links
-- Atualizar o `database/schema.sql` com o novo schema
+### ~~1. Atualizar o banco de dados~~ (FEITO)
+- ~~Deletar as tabelas antigas no pgAdmin (na ordem: movimentacoes, produtos, fornecedores, categorias)~~
+- ~~Criar as novas tabelas na ordem: usuarios, categorias, produtos, links~~
+- ~~Atualizar o `database/schema.sql` com o novo schema~~
 
 ### 2. Autenticação de usuários
 - Instalar `bcrypt` e `jsonwebtoken`
@@ -234,6 +229,6 @@ Scripts:
 ## Preferências e combinados
 - Commits em inglês
 - Commit e push após cada arquivo/feature concluída
-- Comentários nos arquivos em português, na primeira pessoa, simples e detalhados (sem travessões)
+- Comentários nos arquivos em português, na primeira pessoa, simples e detalhados
 - Claude não entrega código pronto, apenas guia
 - Padrão de commit: `feat:` para features, `docs:` para comentários, `chore:` para configs
