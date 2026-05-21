@@ -8,6 +8,7 @@ function autenticar(req, res, next){
     // O frontend manda o token assim: Authorization: Bearer eyJhbGc...
     let authHeader = req.headers.Authorization || req.headers.authorization
 
+    //Esse código aqui embaixo foi do youtube meu dog, refatorar essa porra aqui depois
     // Verifico se o cabeçalho existe e se começa com "Bearer" (padrão JWT)
     if(authHeader && authHeader.startsWith("Bearer")){
 

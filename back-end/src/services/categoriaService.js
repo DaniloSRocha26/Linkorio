@@ -1,11 +1,16 @@
-//Importei o instância do pool do db.js para utilizar aqui
+//Importo a instância do pool do db.js para fazer as queries no banco
 import pool from "../config/db.js"
 
-//Criei uma função assíncrona getAll() que executa 
-// o SELECT * FROM categorias com o pool query()
-async function getAll(){
-    const result = await pool.query ('SELECT * FROM categorias')
+//Busca todas as categorias que pertencem ao usuário logado
+async function getAll(usuario_id){
+    const result = await pool.query('SELECT * FROM categorias WHERE usuario_id = $1', [usuario_id])
     return result.rows
 }
 
-export default getAll
+//Cria uma nova categoria vinculada ao usuário logado e retorna a categoria criada
+async function create(usuario_id, nome){
+    const result = await pool.query('INSERT INTO categorias (usuario_id, nome) VALUES($1, $2) RETURNING *', [usuario_id, nome])
+    return result.rows[0]
+}
+
+export {getAll, create}
