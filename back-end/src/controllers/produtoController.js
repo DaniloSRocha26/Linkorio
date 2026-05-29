@@ -26,7 +26,7 @@ async function creatingProduto(req, res){
 //Atualiza nome, descrição e categoria de um produto pelo id que vem na URL
 async function updatingProduto(req, res){
     try{
-        const updateProduto = await update(req.params.id, req.body.nome, req.body.descricao, req.body.categoria_id)
+        const updateProduto = await update(req.params.id, req.body.nome, req.body.descricao, req.body.categoria_id, req.user.id)
         res.status(200).json(updateProduto)
     }catch(error){
         res.status(500).json({ message: error.message})
@@ -36,7 +36,7 @@ async function updatingProduto(req, res){
 //Remove um produto pelo id que vem na URL
 async function removingProduto(req, res){
     try{
-        await remove(req.params.id)
+        await remove(req.params.id, req.user.id)
         res.status(200).json({ message: "Produto removido com sucesso" })
     }catch(error){
         res.status(500).json({ message: error.message })
@@ -46,7 +46,7 @@ async function removingProduto(req, res){
 //Inverte o campo comprado do produto, true vira false e vice-versa
 async function toggleCompradoConfirm(req, res){
     try{
-        const produto = await toggleComprado(req.params.id)
+        const produto = await toggleComprado(req.params.id, req.user.id)
         res.status(200).json(produto)
     }catch(error){
         res.status(500).json({ message: error.message})
