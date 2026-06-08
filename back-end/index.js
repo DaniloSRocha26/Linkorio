@@ -1,5 +1,7 @@
 // Importo o Express, que é o framework que uso para criar o servidor e as rotas da API
 import express from "express"
+import helmet from "helmet"
+
 
 // Importo o cors, que permite que o frontend (rodando em outra porta) acesse minha API
 // Sem isso, o navegador bloquearia as requisições por segurança
@@ -25,6 +27,8 @@ const port = process.env.PORT
 // Middlewares são funções que rodam em toda requisição antes de chegar nas rotas
 app.use(cors())         // Libera o acesso do frontend à minha API
 app.use(express.json()) // Faz o servidor entender JSON no corpo das requisições (ex: POST e PUT)
+app.use(helmet())       // Adiciona headers de segurança HTTP automaticamente
+
 
 // Rota de teste para confirmar que o servidor está no ar
 app.get('/', (req, res) => {

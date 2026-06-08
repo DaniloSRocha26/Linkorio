@@ -27,7 +27,7 @@ async function login(email, senha){
 
         //Está verificando se nenhum usuário foi encontrado
         if  (user.rows.length === 0){
-            throw new Error ("usuário não enconrado")
+            throw new Error ("Email e senha incorretos")
         }
         const usuario = user.rows[0]
 
@@ -35,7 +35,7 @@ async function login(email, senha){
         const senhaComparada = await bcrypt.compare(senha, usuario.senha)
 
         if (senhaComparada === false){
-            throw new Error("Email ou senha incorretos")
+            throw new Error("Email e senha incorretos")
         }
         
         //Gera um token com o id do usuário dentro, assinado com a chave secreta e tempo limite
