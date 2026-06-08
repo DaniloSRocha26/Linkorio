@@ -23,48 +23,51 @@ export default function Login() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 w-full max-w-sm">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Entrar</h1>
+        <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4">
+            <div className="w-full max-w-sm">
+                <h1 className="text-3xl font-bold text-white text-center mb-2">Wishlist</h1>
+                <p className="text-zinc-500 text-sm text-center mb-8">Entre na sua conta</p>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div>
-                        <label className="block text-sm text-gray-600 mb-1">Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm text-gray-600 mb-1">Senha</label>
-                        <input
-                            type="password"
-                            value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
-                            required
-                            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                        />
-                    </div>
+                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                        <div>
+                            <label className="block text-xs font-medium text-zinc-400 mb-1.5">Email</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-medium text-zinc-400 mb-1.5">Senha</label>
+                            <input
+                                type="password"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                                required
+                                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                            />
+                        </div>
 
-                    {erro && <p className="text-red-500 text-sm">{erro}</p>}
+                        {erro && <p className="text-red-400 text-xs">{erro}</p>}
 
-                    <button
-                        type="submit"
-                        className="bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-                    >
-                        Entrar
-                    </button>
-                </form>
+                        <button
+                            type="submit"
+                            className="bg-violet-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-violet-500 transition-colors mt-1"
+                        >
+                            Entrar
+                        </button>
+                    </form>
 
-                <p className="text-sm text-center text-gray-500 mt-4">
-                    Não tem conta?{" "}
-                    <Link to="/register" className="text-indigo-600 hover:underline">
-                        Cadastre-se
-                    </Link>
-                </p>
+                    <p className="text-xs text-center text-zinc-500 mt-4">
+                        Não tem conta?{" "}
+                        <Link to="/register" className="text-violet-400 hover:text-violet-300 transition-colors">
+                            Cadastre-se
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     )

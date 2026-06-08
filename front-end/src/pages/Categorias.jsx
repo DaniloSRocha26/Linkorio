@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
+import { X, Pencil } from "lucide-react"
 import api from "../services/api"
-import Navbar from "../components/Navbar"
 
 export default function Categorias() {
     const [categorias, setCategorias] = useState([])
@@ -37,63 +37,63 @@ export default function Categorias() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <Navbar />
-            <div className="max-w-xl mx-auto px-4 py-8">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-6">Categorias</h1>
-
-                <form onSubmit={criarCategoria} className="flex gap-2 mb-6">
-                    <input
-                        type="text"
-                        placeholder="Nova categoria..."
-                        value={novoNome}
-                        onChange={(e) => setNovoNome(e.target.value)}
-                        className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                    />
-                    <button
-                        type="submit"
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-                    >
-                        Adicionar
-                    </button>
-                </form>
-
-                <ul className="flex flex-col gap-2">
-                    {categorias.map((cat) => (
-                        <li key={cat.id} className="bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between">
-                            {editandoId === cat.id ? (
-                                <div className="flex gap-2 flex-1 mr-2">
-                                    <input
-                                        value={editandoNome}
-                                        onChange={(e) => setEditandoNome(e.target.value)}
-                                        className="flex-1 border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                                    />
-                                    <button onClick={() => salvarEdicao(cat.id)} className="text-sm text-indigo-600 font-medium hover:underline">Salvar</button>
-                                    <button onClick={() => setEditandoId(null)} className="text-sm text-gray-400 hover:underline">Cancelar</button>
-                                </div>
-                            ) : (
-                                <span className="text-gray-700 text-sm">{cat.nome}</span>
-                            )}
-                            {editandoId !== cat.id && (
-                                <div className="flex gap-3">
-                                    <button
-                                        onClick={() => { setEditandoId(cat.id); setEditandoNome(cat.nome) }}
-                                        className="text-sm text-gray-400 hover:text-indigo-600 transition-colors"
-                                    >
-                                        Editar
-                                    </button>
-                                    <button
-                                        onClick={() => removerCategoria(cat.id)}
-                                        className="text-sm text-gray-400 hover:text-red-500 transition-colors"
-                                    >
-                                        Remover
-                                    </button>
-                                </div>
-                            )}
-                        </li>
-                    ))}
-                </ul>
+        <div>
+            <div className="mb-6">
+                <h1 className="text-xl font-bold text-white">Categorias</h1>
+                <p className="text-xs text-zinc-500 mt-0.5">{categorias.length} categorias criadas</p>
             </div>
+
+            <form onSubmit={criarCategoria} className="flex gap-2 mb-6">
+                <input
+                    type="text"
+                    placeholder="Nova categoria..."
+                    value={novoNome}
+                    onChange={(e) => setNovoNome(e.target.value)}
+                    className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                />
+                <button
+                    type="submit"
+                    className="bg-violet-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-violet-500 transition-colors"
+                >
+                    Adicionar
+                </button>
+            </form>
+
+            <ul className="flex flex-col gap-2">
+                {categorias.map((cat) => (
+                    <li key={cat.id} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 flex items-center justify-between">
+                        {editandoId === cat.id ? (
+                            <div className="flex gap-2 flex-1 mr-2">
+                                <input
+                                    value={editandoNome}
+                                    onChange={(e) => setEditandoNome(e.target.value)}
+                                    className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                                />
+                                <button onClick={() => salvarEdicao(cat.id)} className="text-sm text-violet-400 font-medium hover:text-violet-300 transition-colors">Salvar</button>
+                                <button onClick={() => setEditandoId(null)} className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">Cancelar</button>
+                            </div>
+                        ) : (
+                            <span className="text-sm font-medium text-zinc-200">{cat.nome}</span>
+                        )}
+                        {editandoId !== cat.id && (
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => { setEditandoId(cat.id); setEditandoNome(cat.nome) }}
+                                    className="text-zinc-500 hover:text-violet-400 transition-colors p-1"
+                                >
+                                    <Pencil size={14} />
+                                </button>
+                                <button
+                                    onClick={() => removerCategoria(cat.id)}
+                                    className="text-zinc-500 hover:text-red-400 transition-colors p-1"
+                                >
+                                    <X size={14} />
+                                </button>
+                            </div>
+                        )}
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
