@@ -40,7 +40,7 @@ export default function Categorias() {
         <div>
             <div className="mb-6">
                 <h1 className="text-xl font-bold text-white">Categorias</h1>
-                <p className="text-xs text-zinc-500 mt-0.5">{categorias.length} categorias criadas</p>
+                <p className="text-xs text-[#9CA3AF] mt-0.5">{categorias.length} categorias criadas</p>
             </div>
 
             <form onSubmit={criarCategoria} className="flex gap-2 mb-6">
@@ -49,11 +49,11 @@ export default function Categorias() {
                     placeholder="Nova categoria..."
                     value={novoNome}
                     onChange={(e) => setNovoNome(e.target.value)}
-                    className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                    className="flex-1 bg-[#1A1D29] border border-[#2A2E3D] rounded-lg px-3 py-2.5 text-sm text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                 />
                 <button
                     type="submit"
-                    className="bg-violet-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-violet-500 transition-colors"
+                    className="bg-[#8B5CF6] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#7C3AED] transition-colors"
                 >
                     Adicionar
                 </button>
@@ -61,31 +61,31 @@ export default function Categorias() {
 
             <ul className="flex flex-col gap-2">
                 {categorias.map((cat) => (
-                    <li key={cat.id} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 flex items-center justify-between">
+                    <li key={cat.id} className="bg-[#1A1D29] border border-[#2A2E3D] rounded-xl px-4 py-3 flex items-center justify-between hover:border-[#3A3E4D] transition-colors">
                         {editandoId === cat.id ? (
                             <div className="flex gap-2 flex-1 mr-2">
                                 <input
                                     value={editandoNome}
                                     onChange={(e) => setEditandoNome(e.target.value)}
-                                    className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                                    className="flex-1 bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-2 py-1 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                                 />
-                                <button onClick={() => salvarEdicao(cat.id)} className="text-sm text-violet-400 font-medium hover:text-violet-300 transition-colors">Salvar</button>
-                                <button onClick={() => setEditandoId(null)} className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">Cancelar</button>
+                                <button onClick={() => salvarEdicao(cat.id)} className="text-sm text-[#8B5CF6] font-medium hover:text-[#A78BFA] transition-colors">Salvar</button>
+                                <button onClick={() => setEditandoId(null)} className="text-sm text-[#6B7280] hover:text-[#9CA3AF] transition-colors">Cancelar</button>
                             </div>
                         ) : (
-                            <span className="text-sm font-medium text-zinc-200">{cat.nome}</span>
+                            <span className="text-sm font-medium text-white">{cat.nome}</span>
                         )}
                         {editandoId !== cat.id && (
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1">
                                 <button
                                     onClick={() => { setEditandoId(cat.id); setEditandoNome(cat.nome) }}
-                                    className="text-zinc-500 hover:text-violet-400 transition-colors p-1"
+                                    className="text-[#6B7280] hover:text-[#8B5CF6] transition-colors p-1.5 rounded-lg hover:bg-[#2A2E3D]"
                                 >
                                     <Pencil size={14} />
                                 </button>
                                 <button
                                     onClick={() => removerCategoria(cat.id)}
-                                    className="text-zinc-500 hover:text-red-400 transition-colors p-1"
+                                    className="text-[#6B7280] hover:text-red-400 transition-colors p-1.5 rounded-lg hover:bg-[#2A2E3D]"
                                 >
                                     <X size={14} />
                                 </button>

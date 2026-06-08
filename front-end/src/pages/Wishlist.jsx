@@ -79,7 +79,6 @@ export default function Wishlist() {
         return categorias.find((c) => c.id === id)?.nome || ""
     }
 
-    // Conta quantos produtos pertencem a cada categoria
     function contarPorCategoria(catId) {
         return produtos.filter((p) => p.categoria_id === catId).length
     }
@@ -90,41 +89,43 @@ export default function Wishlist() {
 
     return (
         <div>
+            {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h1 className="text-xl font-bold text-white">Minha Lista</h1>
-                    <p className="text-xs text-zinc-500 mt-0.5">{produtos.length} itens salvos</p>
+                    <p className="text-xs text-[#9CA3AF] mt-0.5">{produtos.length} itens salvos</p>
                 </div>
                 <button
                     onClick={() => setMostrarForm(!mostrarForm)}
-                    className="flex items-center gap-1.5 bg-violet-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-violet-500 transition-colors"
+                    className="flex items-center gap-1.5 bg-[#8B5CF6] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#7C3AED] transition-colors"
                 >
                     <Plus size={15} />
                     {mostrarForm ? "Cancelar" : "Adicionar"}
                 </button>
             </div>
 
+            {/* Formulário */}
             {mostrarForm && (
-                <form onSubmit={criarProduto} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 mb-6 flex flex-col gap-3">
+                <form onSubmit={criarProduto} className="bg-[#1A1D29] border border-[#2A2E3D] rounded-2xl p-5 mb-6 flex flex-col gap-3">
                     <input
                         type="text"
                         placeholder="Nome do item"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
                         required
-                        className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                        className="bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-3 py-2.5 text-sm text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                     />
                     <input
                         type="text"
                         placeholder="Descrição (opcional)"
                         value={descricao}
                         onChange={(e) => setDescricao(e.target.value)}
-                        className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                        className="bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-3 py-2.5 text-sm text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                     />
                     <select
                         value={categoriaId}
                         onChange={(e) => setCategoriaId(e.target.value)}
-                        className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-zinc-300 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                        className="bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-3 py-2.5 text-sm text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                     >
                         <option value="">Sem categoria</option>
                         {categorias.map((cat) => (
@@ -133,7 +134,7 @@ export default function Wishlist() {
                     </select>
                     <button
                         type="submit"
-                        className="bg-violet-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-violet-500 transition-colors"
+                        className="bg-[#8B5CF6] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#7C3AED] transition-colors"
                     >
                         Salvar
                     </button>
@@ -144,7 +145,11 @@ export default function Wishlist() {
             <div className="flex gap-2 mb-6 flex-wrap">
                 <button
                     onClick={() => setFiltroCategoria("")}
-                    className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${filtroCategoria === "" ? "bg-violet-600 text-white" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white"}`}
+                    className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                        filtroCategoria === ""
+                            ? "bg-[#8B5CF6] text-white"
+                            : "bg-[#1A1D29] text-[#9CA3AF] border border-[#2A2E3D] hover:border-[#8B5CF6] hover:text-white"
+                    }`}
                 >
                     Todas ({produtos.length})
                 </button>
@@ -152,7 +157,11 @@ export default function Wishlist() {
                     <button
                         key={cat.id}
                         onClick={() => setFiltroCategoria(cat.id)}
-                        className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${filtroCategoria === cat.id ? "bg-violet-600 text-white" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white"}`}
+                        className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                            filtroCategoria === cat.id
+                                ? "bg-[#8B5CF6] text-white"
+                                : "bg-[#1A1D29] text-[#9CA3AF] border border-[#2A2E3D] hover:border-[#8B5CF6] hover:text-white"
+                        }`}
                     >
                         {cat.nome} ({contarPorCategoria(cat.id)})
                     </button>
@@ -164,64 +173,68 @@ export default function Wishlist() {
                 {produtosFiltrados.map((produto) => (
                     <div
                         key={produto.id}
-                        className={`bg-zinc-900 border rounded-xl p-4 flex flex-col gap-2 ${produto.comprado ? "border-emerald-900 opacity-60" : "border-zinc-800"}`}
+                        className={`bg-[#1A1D29] border rounded-xl p-4 flex flex-col gap-2 hover:border-[#3A3E4D] transition-colors ${
+                            produto.comprado ? "border-[#14532d] opacity-60" : "border-[#2A2E3D]"
+                        }`}
                     >
-                        {/* Cabeçalho do card */}
+                        {/* Cabeçalho */}
                         <div className="flex items-start justify-between gap-2">
                             <div className="flex-1 min-w-0">
-                                <p className={`font-semibold text-sm leading-snug ${produto.comprado ? "line-through text-zinc-500" : "text-white"}`}>
+                                <p className={`font-semibold text-sm leading-snug ${produto.comprado ? "line-through text-[#6B7280]" : "text-white"}`}>
                                     {produto.nome}
                                 </p>
                                 {produto.descricao && (
-                                    <p className="text-xs text-zinc-500 mt-0.5 truncate">{produto.descricao}</p>
+                                    <p className="text-xs text-[#9CA3AF] mt-0.5 truncate">{produto.descricao}</p>
                                 )}
                             </div>
                             <button
                                 onClick={() => removerProduto(produto.id)}
-                                className="text-zinc-600 hover:text-red-400 transition-colors shrink-0 mt-0.5"
+                                className="text-[#6B7280] hover:text-red-400 transition-colors shrink-0 mt-0.5 p-0.5 rounded hover:bg-[#2A2E3D]"
                             >
                                 <X size={14} />
                             </button>
                         </div>
 
-                        {/* Categoria + metadados */}
-                        <div className="flex items-center gap-2">
-                            {produto.categoria_id && (
-                                <span className="text-xs bg-violet-950 text-violet-400 border border-violet-800 px-2 py-0.5 rounded-full">
-                                    {nomeCategoria(produto.categoria_id)}
-                                </span>
-                            )}
-                            {links[produto.id] !== undefined && (
-                                <span className="text-xs text-zinc-600">
-                                    {links[produto.id].length} {links[produto.id].length === 1 ? "link" : "links"}
-                                </span>
-                            )}
-                        </div>
+                        {/* Categoria */}
+                        {produto.categoria_id && (
+                            <span className="self-start text-xs bg-[#2E1065] text-[#A78BFA] border border-[#4C1D95] px-2 py-0.5 rounded-full">
+                                {nomeCategoria(produto.categoria_id)}
+                            </span>
+                        )}
 
                         {/* Ações */}
                         <div className="flex items-center gap-2 mt-1">
                             <button
                                 onClick={() => toggleComprado(produto.id)}
-                                className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${produto.comprado ? "bg-emerald-950 text-emerald-400 border border-emerald-800" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"}`}
+                                className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${
+                                    produto.comprado
+                                        ? "bg-[#052e16] text-[#22C55E] border border-[#14532d]"
+                                        : "bg-[#2A2E3D] text-[#9CA3AF] hover:text-white"
+                                }`}
                             >
                                 {produto.comprado ? "Comprado" : "Marcar"}
                             </button>
                             <button
                                 onClick={() => abrirLinks(produto.id)}
-                                className="flex items-center gap-1 text-xs text-zinc-500 hover:text-violet-400 transition-colors"
+                                className="flex items-center gap-1 text-xs text-[#6B7280] hover:text-[#8B5CF6] transition-colors"
                             >
                                 <Link2 size={13} />
                                 Links
                                 {linkAberto === produto.id ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
                             </button>
+                            {links[produto.id] !== undefined && links[produto.id].length > 0 && (
+                                <span className="text-xs text-[#6B7280]">
+                                    {links[produto.id].length} {links[produto.id].length === 1 ? "link" : "links"}
+                                </span>
+                            )}
                         </div>
 
                         {/* Seção de links */}
                         {linkAberto === produto.id && (
-                            <div className="border-t border-zinc-800 pt-3 mt-1 flex flex-col gap-2">
-                                <ul className="flex flex-col gap-1">
+                            <div className="border-t border-[#2A2E3D] pt-3 mt-1 flex flex-col gap-2">
+                                <ul className="flex flex-col gap-1.5">
                                     {(links[produto.id] || []).length === 0 && (
-                                        <p className="text-xs text-zinc-600">Nenhum link ainda.</p>
+                                        <p className="text-xs text-[#6B7280]">Nenhum link ainda.</p>
                                     )}
                                     {(links[produto.id] || []).map((link) => (
                                         <li key={link.id} className="flex items-center justify-between gap-2">
@@ -229,14 +242,14 @@ export default function Wishlist() {
                                                 href={link.url}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 hover:underline truncate transition-colors"
+                                                className="flex items-center gap-1.5 text-xs text-[#3B82F6] hover:text-[#60A5FA] hover:underline truncate transition-colors"
                                             >
                                                 <Link2 size={11} className="shrink-0" />
                                                 {link.nome_loja || link.url}
                                             </a>
                                             <button
                                                 onClick={() => removerLink(link.id, produto.id)}
-                                                className="text-zinc-600 hover:text-red-400 shrink-0 transition-colors"
+                                                className="text-[#6B7280] hover:text-red-400 shrink-0 transition-colors p-0.5 rounded hover:bg-[#2A2E3D]"
                                             >
                                                 <X size={12} />
                                             </button>
@@ -250,18 +263,18 @@ export default function Wishlist() {
                                         value={novaUrl}
                                         onChange={(e) => setNovaUrl(e.target.value)}
                                         required
-                                        className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                                        className="flex-1 bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-2 py-1.5 text-xs text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                                     />
                                     <input
                                         type="text"
                                         placeholder="Loja"
                                         value={novaNomeLoja}
                                         onChange={(e) => setNovaNomeLoja(e.target.value)}
-                                        className="w-24 bg-zinc-800 border border-zinc-700 rounded-lg px-2 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                                        className="w-24 bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-2 py-1.5 text-xs text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                                     />
                                     <button
                                         type="submit"
-                                        className="bg-violet-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-violet-500 transition-colors"
+                                        className="bg-[#8B5CF6] text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-[#7C3AED] transition-colors"
                                     >
                                         +
                                     </button>

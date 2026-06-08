@@ -21,41 +21,41 @@ export default function Register() {
     }
 
     return (
-        <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4">
+        <div className="min-h-screen bg-[#0F1117] flex items-center justify-center px-4">
             <div className="w-full max-w-sm">
-                <h1 className="text-3xl font-bold text-white text-center mb-2">Wishlist</h1>
-                <p className="text-zinc-500 text-sm text-center mb-8">Crie sua conta</p>
+                <h1 className="text-3xl font-bold text-white text-center mb-1">MyLinkVault</h1>
+                <p className="text-[#9CA3AF] text-sm text-center mb-8">Crie sua conta</p>
 
-                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                <div className="bg-[#1A1D29] border border-[#2A2E3D] rounded-2xl p-6">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                         <div>
-                            <label className="block text-xs font-medium text-zinc-400 mb-1.5">Nome</label>
+                            <label className="block text-xs font-medium text-[#9CA3AF] mb-1.5">Nome</label>
                             <input
                                 type="text"
                                 value={nome}
                                 onChange={(e) => setNome(e.target.value)}
                                 required
-                                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                                className="w-full bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-3 py-2.5 text-sm text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-medium text-zinc-400 mb-1.5">Email</label>
+                            <label className="block text-xs font-medium text-[#9CA3AF] mb-1.5">Email</label>
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                                className="w-full bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-3 py-2.5 text-sm text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-medium text-zinc-400 mb-1.5">Senha</label>
+                            <label className="block text-xs font-medium text-[#9CA3AF] mb-1.5">Senha</label>
                             <input
                                 type="password"
                                 value={senha}
                                 onChange={(e) => setSenha(e.target.value)}
                                 required
-                                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition"
+                                className="w-full bg-[#0F1117] border border-[#2A2E3D] rounded-lg px-3 py-2.5 text-sm text-white placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:border-transparent transition"
                             />
                         </div>
 
@@ -63,15 +63,15 @@ export default function Register() {
 
                         <button
                             type="submit"
-                            className="bg-violet-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-violet-500 transition-colors mt-1"
+                            className="bg-[#8B5CF6] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#7C3AED] transition-colors mt-1"
                         >
                             Cadastrar
                         </button>
                     </form>
 
-                    <p className="text-xs text-center text-zinc-500 mt-4">
+                    <p className="text-xs text-center text-[#6B7280] mt-4">
                         Já tem conta?{" "}
-                        <Link to="/login" className="text-violet-400 hover:text-violet-300 transition-colors">
+                        <Link to="/login" className="text-[#8B5CF6] hover:text-[#A78BFA] transition-colors">
                             Entrar
                         </Link>
                     </p>
