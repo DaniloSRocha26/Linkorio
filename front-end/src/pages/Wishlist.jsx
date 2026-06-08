@@ -226,7 +226,7 @@ export default function Wishlist() {
                                     ? "Fechar links"
                                     : links[produto.id] !== undefined
                                         ? `Ver links (${links[produto.id].length})`
-                                        : "Ver links"
+                                        : `Ver links (${produto.link_count})`
                                 }
                             </button>
                         </div>
@@ -269,7 +269,7 @@ export default function Wishlist() {
                                     />
                                     <input
                                         type="text"
-                                        placeholder="Loja"
+                                        placeholder="Nome"
                                         value={novaNomeLoja}
                                         onChange={(e) => setNovaNomeLoja(e.target.value)}
                                         className="w-24 bg-[var(--surface-2)] border border-[var(--border)] rounded-lg px-2 py-1.5 text-xs text-[var(--text)] placeholder-[var(--faint)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition"

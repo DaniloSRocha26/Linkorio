@@ -1,8 +1,15 @@
 import pool from "../config/db.js"
 
-//Busca todos os produtos que pertencem ao usuário logado
+//Busca todos os produtos do usuário logado já com a contagem de links de cada um
 async function getAll(usuario_id){
-    const result = await pool.query('SELECT * FROM produtos WHERE usuario_id = $1', [usuario_id])
+    const result = await pool.query(
+        `SELECT p.*, COUNT(l.id)::int AS link_count
+         FROM produtos p
+         LEFT JOIN links l ON l.produto_id = p.id
+         WHERE p.usuario_id = $1
+         GROUP BY p.id`,
+        [usuario_id]
+    )
     return result.rows
 }
 
