@@ -3,8 +3,20 @@ import { createContext, useContext, useState } from "react"
 // Contexto de autenticação compartilhado entre todas as páginas
 const AuthContext = createContext()
 
+//Decodifica o payload do JWT sem biblioteca externa
+function decodificarToken(token) {
+    try {
+        return JSON.parse(atob(token.split('.')[1]))
+    } catch {
+        return {}
+    }
+}
+
 export function AuthProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem("token"))
+
+    //Pego o nome do usuário diretamente do payload do token
+    const usuario = token ? decodificarToken(token) : {}
 
     function login(novoToken) {
         localStorage.setItem("token", novoToken)
@@ -17,7 +29,7 @@ export function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ token, login, logout }}>
+        <AuthContext.Provider value={{ token, login, logout, usuario }}>
             {children}
         </AuthContext.Provider>
     )

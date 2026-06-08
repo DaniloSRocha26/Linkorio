@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
 import { Link2, X, Plus, Check, Folder } from "lucide-react"
 import api from "../services/api"
+import { useAuth } from "../context/AuthContext"
 
 export default function Wishlist() {
+    const { usuario } = useAuth()
     const [produtos, setProdutos] = useState([])
     const [categorias, setCategorias] = useState([])
     const [mostrarForm, setMostrarForm] = useState(false)
@@ -92,8 +94,8 @@ export default function Wishlist() {
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h1 className="text-xl font-bold text-[var(--text)]">Minha Lista</h1>
-                    <p className="text-xs text-[var(--muted)] mt-0.5">{produtos.length} itens salvos</p>
+                    <h1 className="text-xl font-bold text-[var(--text)]">Bem-vindo(a), {usuario.nome}!</h1>
+                    <p className="text-sm text-[var(--muted)] mt-0.5">Aqui está sua lista, {produtos.length} {produtos.length === 1 ? "item salvo" : "itens salvos"}</p>
                 </div>
                 <button
                     onClick={() => setMostrarForm(!mostrarForm)}

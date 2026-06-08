@@ -38,9 +38,9 @@ async function login(email, senha){
             throw new Error("Email e senha incorretos")
         }
         
-        //Gera um token com o id do usuário dentro, assinado com a chave secreta e tempo limite
+        //Gera um token com o id e nome do usuário dentro, assinado com a chave secreta e tempo limite
         //pro token expirar
-        const token = jwt.sign({ id: usuario.id}, process.env.JWT_SECRET, {expiresIn:"7d"})
+        const token = jwt.sign({ id: usuario.id, nome: usuario.nome }, process.env.JWT_SECRET, {expiresIn:"7d"})
         return token
     } catch(error){
         throw error
