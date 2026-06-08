@@ -1,8 +1,11 @@
 import axios from "axios"
 
+// Em produção usa a URL do Railway, em desenvolvimento usa o localhost
+const baseURL = import.meta.env.VITE_API_URL || "http://localhost:3000"
+
 // Instância do axios apontando para a API do backend
 const api = axios.create({
-    baseURL: "http://localhost:3000"
+    baseURL
 })
 
 // Interceptor que adiciona o token JWT em toda requisição automaticamente
