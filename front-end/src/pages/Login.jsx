@@ -23,31 +23,31 @@ export default function Login() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F5F7FB] flex items-center justify-center px-4">
+        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center px-4">
             <div className="w-full max-w-sm">
-                <h1 className="text-3xl font-bold text-[#6366F1] text-center mb-1">MyLinkVault</h1>
-                <p className="text-[#6B7280] text-sm text-center mb-8">Entre na sua conta</p>
+                <h1 className="text-3xl font-bold text-[var(--primary)] text-center mb-1">MyLinkVault</h1>
+                <p className="text-[var(--muted)] text-sm text-center mb-8">Entre na sua conta</p>
 
-                <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm">
+                <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-sm">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                         <div>
-                            <label className="block text-xs font-medium text-[#374151] mb-1.5">Email</label>
+                            <label className="block text-xs font-medium text-[var(--text-2)] mb-1.5">Email</label>
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full bg-white border border-[#E5E7EB] rounded-lg px-3 py-2.5 text-sm text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent transition"
+                                className="w-full bg-[var(--surface-2)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--faint)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-medium text-[#374151] mb-1.5">Senha</label>
+                            <label className="block text-xs font-medium text-[var(--text-2)] mb-1.5">Senha</label>
                             <input
                                 type="password"
                                 value={senha}
                                 onChange={(e) => setSenha(e.target.value)}
                                 required
-                                className="w-full bg-white border border-[#E5E7EB] rounded-lg px-3 py-2.5 text-sm text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#6366F1] focus:border-transparent transition"
+                                className="w-full bg-[var(--surface-2)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--text)] placeholder-[var(--faint)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition"
                             />
                         </div>
 
@@ -55,15 +55,15 @@ export default function Login() {
 
                         <button
                             type="submit"
-                            className="bg-[#6366F1] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#4F46E5] transition-colors mt-1"
+                            className="bg-[var(--primary)] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[var(--primary-h)] transition-colors mt-1"
                         >
                             Entrar
                         </button>
                     </form>
 
-                    <p className="text-xs text-center text-[#6B7280] mt-4">
+                    <p className="text-xs text-center text-[var(--muted)] mt-4">
                         Não tem conta?{" "}
-                        <Link to="/register" className="text-[#6366F1] hover:text-[#4F46E5] transition-colors font-medium">
+                        <Link to="/register" className="text-[var(--primary)] hover:text-[var(--primary-h)] transition-colors font-medium">
                             Cadastre-se
                         </Link>
                     </p>
