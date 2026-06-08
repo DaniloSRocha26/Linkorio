@@ -9,6 +9,7 @@ export default function Register() {
     const [erro, setErro] = useState("")
     const navigate = useNavigate()
 
+    //Envia os dados para a API e redireciona para o login após o cadastro
     async function handleSubmit(e) {
         e.preventDefault()
         setErro("")
@@ -59,6 +60,7 @@ export default function Register() {
                             />
                         </div>
 
+                        {/*Exibe a mensagem de erro se o cadastro falhar*/}
                         {erro && <p className="text-red-500 text-xs">{erro}</p>}
 
                         <button

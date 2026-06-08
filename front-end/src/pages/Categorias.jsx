@@ -5,6 +5,7 @@ import api from "../services/api"
 export default function Categorias() {
     const [categorias, setCategorias] = useState([])
     const [novoNome, setNovoNome] = useState("")
+    //editandoId guarda o id da categoria que está sendo editada no momento
     const [editandoId, setEditandoId] = useState(null)
     const [editandoNome, setEditandoNome] = useState("")
 
@@ -12,11 +13,13 @@ export default function Categorias() {
         buscarCategorias()
     }, [])
 
+    //Busca todas as categorias do usuário logado
     async function buscarCategorias() {
         const resposta = await api.get("/categorias")
         setCategorias(resposta.data)
     }
 
+    //Cria uma nova categoria e atualiza a lista
     async function criarCategoria(e) {
         e.preventDefault()
         if (!novoNome.trim()) return
@@ -25,12 +28,14 @@ export default function Categorias() {
         buscarCategorias()
     }
 
+    //Salva o novo nome da categoria editada e sai do modo de edição
     async function salvarEdicao(id) {
         await api.put(`/categorias/${id}`, { nome: editandoNome })
         setEditandoId(null)
         buscarCategorias()
     }
 
+    //Remove uma categoria e atualiza a lista
     async function removerCategoria(id) {
         await api.delete(`/categorias/${id}`)
         buscarCategorias()
@@ -62,6 +67,7 @@ export default function Categorias() {
             <ul className="flex flex-col gap-2">
                 {categorias.map((cat) => (
                     <li key={cat.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-xl px-4 py-3 flex items-center justify-between hover:border-[var(--primary-b)] transition-colors shadow-sm">
+                        {/*Modo de edição: exibe input com o nome atual*/}
                         {editandoId === cat.id ? (
                             <div className="flex gap-2 flex-1 mr-2">
                                 <input
@@ -75,6 +81,7 @@ export default function Categorias() {
                         ) : (
                             <span className="text-sm font-medium text-[var(--text)]">{cat.nome}</span>
                         )}
+                        {/*Botões de editar e remover visíveis quando não está editando*/}
                         {editandoId !== cat.id && (
                             <div className="flex items-center gap-1">
                                 <button

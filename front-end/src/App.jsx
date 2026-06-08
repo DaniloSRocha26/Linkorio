@@ -7,11 +7,13 @@ import Register from "./pages/Register"
 import Wishlist from "./pages/Wishlist"
 import Categorias from "./pages/Categorias"
 
+//Componente que protege rotas — redireciona para login se não houver token
 function RotaProtegida({ children }) {
     const { token } = useAuth()
     return token ? <Layout>{children}</Layout> : <Navigate to="/login" />
 }
 
+//Componente raiz que envolve tudo com os providers de tema e autenticação
 function App() {
     return (
         <ThemeProvider>

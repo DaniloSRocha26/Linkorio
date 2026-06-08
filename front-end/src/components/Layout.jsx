@@ -1,5 +1,6 @@
 import Sidebar from "./Sidebar"
 
+//Layout base das páginas autenticadas — sidebar fixa à esquerda e conteúdo à direita
 export default function Layout({ children }) {
     return (
         <div className="flex min-h-screen bg-[var(--bg)]">

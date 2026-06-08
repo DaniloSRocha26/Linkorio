@@ -10,6 +10,7 @@ export default function Login() {
     const { login } = useAuth()
     const navigate = useNavigate()
 
+    //Envia os dados para a API, salva o token e redireciona para a lista
     async function handleSubmit(e) {
         e.preventDefault()
         setErro("")
@@ -51,6 +52,7 @@ export default function Login() {
                             />
                         </div>
 
+                        {/*Exibe a mensagem de erro se o login falhar*/}
                         {erro && <p className="text-red-500 text-xs">{erro}</p>}
 
                         <button
