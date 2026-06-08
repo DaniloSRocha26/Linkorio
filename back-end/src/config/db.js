@@ -12,14 +12,19 @@ import { Pool } from "pg"
 dotenv.config()
 
 // Crio a instância do Pool com as configurações do banco
-// Todas as informações vêm do .env — nunca coloco senhas diretamente no código!
-const pool = new Pool({
-    host: process.env.DB_HOST,         // Endereço do banco (localhost é minha própria máquina)
-    port: process.env.DB_PORT,         // Porta padrão do PostgreSQL é 5432
-    user: process.env.DB_USER,         // Usuário do banco (normalmente postgres)
-    password: process.env.DB_PASSWORD, // Senha que defini na instalação do PostgreSQL
-    database: process.env.DB_NAME,     // Nome do banco que criei no pgAdmin (inventory)
-})
+// Em produção o Railway fornece DATABASE_URL automaticamente
+// Em desenvolvimento uso as variáveis individuais do .env
+const pool = new Pool(
+    process.env.DATABASE_URL
+        ? { connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } }
+        : {
+            host: process.env.DB_HOST,         // Endereço do banco
+            port: process.env.DB_PORT,         // Porta padrão do PostgreSQL é 5432
+            user: process.env.DB_USER,         // Usuário do banco
+            password: process.env.DB_PASSWORD, // Senha do banco
+            database: process.env.DB_NAME,     // Nome do banco
+          }
+)
 
 // Exporto o pool para que outros arquivos possam usá-lo para fazer consultas no banco
 export default pool
