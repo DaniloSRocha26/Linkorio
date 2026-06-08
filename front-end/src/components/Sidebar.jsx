@@ -16,15 +16,15 @@ export default function Sidebar() {
         const ativo = location.pathname === path
         return `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
             ativo
-                ? "bg-[#8B5CF6] text-white font-medium"
-                : "text-[#9CA3AF] hover:text-white hover:bg-[#1A1D29]"
+                ? "bg-[#EEF2FF] text-[#6366F1] font-medium"
+                : "text-[#6B7280] hover:text-[#111827] hover:bg-[#F8FAFC]"
         }`
     }
 
     return (
-        <aside className="fixed top-0 left-0 h-screen w-56 bg-[#151721] border-r border-[#2A2E3D] flex flex-col px-3 py-5 z-20">
+        <aside className="fixed top-0 left-0 h-screen w-56 bg-white border-r border-[#E5E7EB] flex flex-col px-3 py-5 z-20">
             <div className="px-3 mb-8">
-                <span className="text-lg font-bold text-[#8B5CF6] tracking-tight">MyLinkVault</span>
+                <span className="text-lg font-bold text-[#6366F1] tracking-tight">MyLinkVault</span>
             </div>
 
             <nav className="flex flex-col gap-1 flex-1">
@@ -40,7 +40,7 @@ export default function Sidebar() {
 
             <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#6B7280] hover:text-red-400 hover:bg-[#1A1D29] transition-colors"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#6B7280] hover:text-red-500 hover:bg-[#F8FAFC] transition-colors"
             >
                 <LogOut size={16} />
                 Sair
