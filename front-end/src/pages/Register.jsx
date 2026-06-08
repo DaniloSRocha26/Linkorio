@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import api from "../services/api"
+import { useTheme } from "../context/ThemeContext"
+import { Sun, Moon } from "lucide-react"
 import logo from "../assets/Linkorio_LightMode.png"
 
 export default function Register() {
@@ -8,6 +10,7 @@ export default function Register() {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [erro, setErro] = useState("")
+    const { dark, toggle } = useTheme()
     const navigate = useNavigate()
 
     //Envia os dados para a API e redireciona para o login após o cadastro
@@ -23,10 +26,17 @@ export default function Register() {
     }
 
     return (
-        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center px-4">
+        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center px-4 relative">
+            <button
+                onClick={toggle}
+                className="absolute top-4 right-4 p-2 rounded-lg text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition-colors"
+                title={dark ? "Modo claro" : "Modo escuro"}
+            >
+                {dark ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
             <div className="w-full max-w-sm">
                 <img src={logo} alt="MyLinkVault" className="h-20 w-auto mx-auto mb-2" />
-                <p className="text-[var(--muted)] text-sm text-center mb-8">Crie sua conta</p>
+                <p className="text-[var(--text)] text-lg font-semibold text-center mb-8">Crie sua conta</p>
 
                 <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-sm">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
