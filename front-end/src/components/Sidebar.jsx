@@ -30,7 +30,7 @@ export default function Sidebar() {
         <aside className="fixed top-0 left-0 h-screen w-56 bg-[var(--sidebar)] border-r border-[var(--sidebar-b)] flex flex-col px-3 py-5 z-20">
             {/*Logo + botão de tema na mesma linha*/}
             <div className="flex items-center justify-between px-1 mb-5">
-                <img src={logo} alt="MyLinkVault" className="h-14 w-auto object-contain" />
+                <img src={logo} alt="MyLinkVault" className="h-10 w-auto object-contain" />
                 <button
                     onClick={toggle}
                     className="p-1.5 rounded-lg text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--bg)] transition-colors shrink-0"

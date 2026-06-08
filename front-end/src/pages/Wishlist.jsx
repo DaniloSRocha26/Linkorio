@@ -99,7 +99,6 @@ export default function Wishlist() {
                     onClick={() => setMostrarForm(!mostrarForm)}
                     className="flex items-center gap-1.5 bg-[var(--primary)] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[var(--primary-h)] transition-colors shadow-sm"
                 >
-                    <Plus size={15} />
                     {mostrarForm ? "Cancelar" : "Adicionar"}
                 </button>
             </div>
