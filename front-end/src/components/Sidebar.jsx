@@ -2,6 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { useTheme } from "../context/ThemeContext"
 import { LayoutList, Tag, LogOut, Sun, Moon } from "lucide-react"
+import logo from "../assets/Linkorio_LightMode.png"
 
 export default function Sidebar() {
     const { logout } = useAuth()
@@ -27,12 +28,12 @@ export default function Sidebar() {
 
     return (
         <aside className="fixed top-0 left-0 h-screen w-56 bg-[var(--sidebar)] border-r border-[var(--sidebar-b)] flex flex-col px-3 py-5 z-20">
-            {/*Logo e botão de alternar tema*/}
-            <div className="px-3 mb-8 flex items-center justify-between">
-                <span className="text-lg font-bold text-[var(--primary)] tracking-tight">MyLinkVault</span>
+            {/*Logo + botão de tema na mesma linha*/}
+            <div className="flex items-center justify-between px-1 mb-5">
+                <img src={logo} alt="MyLinkVault" className="h-14 w-auto object-contain" />
                 <button
                     onClick={toggle}
-                    className="p-1.5 rounded-lg text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--bg)] transition-colors"
+                    className="p-1.5 rounded-lg text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--bg)] transition-colors shrink-0"
                     title={dark ? "Modo claro" : "Modo escuro"}
                 >
                     {dark ? <Sun size={15} /> : <Moon size={15} />}

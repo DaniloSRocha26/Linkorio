@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import api from "../services/api"
+import logo from "../assets/Linkorio_LightMode.png"
 
 export default function Register() {
     const [nome, setNome] = useState("")
@@ -24,7 +25,7 @@ export default function Register() {
     return (
         <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center px-4">
             <div className="w-full max-w-sm">
-                <h1 className="text-3xl font-bold text-[var(--primary)] text-center mb-1">MyLinkVault</h1>
+                <img src={logo} alt="MyLinkVault" className="h-20 w-auto mx-auto mb-2" />
                 <p className="text-[var(--muted)] text-sm text-center mb-8">Crie sua conta</p>
 
                 <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-sm">
